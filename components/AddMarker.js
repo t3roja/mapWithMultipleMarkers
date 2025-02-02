@@ -4,7 +4,6 @@ import { Marker } from 'react-native-maps'
 export default function AddMarker(props) {
 
 
-
   return (
     <Marker
     title={props.title}

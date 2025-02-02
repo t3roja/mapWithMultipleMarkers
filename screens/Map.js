@@ -3,12 +3,12 @@ import { Platform, StyleSheet } from 'react-native'
 import MapView from 'react-native-maps'
 import { useFocusEffect } from '@react-navigation/native'
 import Constants from 'expo-constants'
-import AddMarker from '../components/Marker'
+import AddMarker from '../components/AddMarker'
 import uuid from 'react-native-uuid'
 
 export default function Map(props) {
 
-  const [markers, setMarkers] = useState([])
+
 
   useFocusEffect(
     useCallback(() => {
@@ -18,7 +18,7 @@ export default function Map(props) {
 
   const addMarker = (e) => {
     const coords = e.nativeEvent.coordinate
-    setMarkers([...markers, { id: uuid.v4(), ...coords }])
+    props.setMarkers([...props.markers, { id: uuid.v4(), ...coords }])
   }
 
   return (
@@ -29,7 +29,7 @@ export default function Map(props) {
         mapType={props.mapType}
         onLongPress={addMarker}
       >
-        {markers.map((marker) => (
+        {props.markers.map((marker) => (
           <AddMarker
             key={marker.id}
             title={`Marker ${marker.id}`}

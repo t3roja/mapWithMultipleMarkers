@@ -30,6 +30,8 @@ export default function App() {
   })
 
   const [mapType, setMapType] = useState('standard')
+  const [markers, setMarkers] = useState([])
+
 
   const getUserPosition = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
@@ -56,24 +58,31 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName='Map'
-          screenOptions={{header: (props) =>
-            <MainAppBar {...props}
-            backgroundColor={settings.backgroundColor}
-            icon={icon}
-            getUserPosition={getUserPosition}
-          />}}
-          >
-            <Stack.Screen name='Map'>
-              {() =>
-                <Map location={location} mapType={mapType} getUserPosition={getUserPosition}/>
-              } 
-            </Stack.Screen>
-            <Stack.Screen name='Settings'>
-              {() =>
-                <Settings backgroundColor={settings.backgroundColor} mapType={mapType} setMapType={setMapType}/>
-              } 
-            </Stack.Screen>
-      </Stack.Navigator>
+          screenOptions={{
+            header: (props) =>
+              <MainAppBar {...props}
+                backgroundColor={settings.backgroundColor}
+                icon={icon}
+                getUserPosition={getUserPosition}
+                setMarkers={setMarkers}
+              />
+          }}
+        >
+          <Stack.Screen name='Map'>
+            {() =>
+              <Map location={location}
+                mapType={mapType}
+                getUserPosition={getUserPosition}
+                markers={markers}
+                setMarkers={setMarkers} />
+            }
+          </Stack.Screen>
+          <Stack.Screen name='Settings'>
+            {() =>
+              <Settings backgroundColor={settings.backgroundColor} mapType={mapType} setMapType={setMapType} />
+            }
+          </Stack.Screen>
+        </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );
